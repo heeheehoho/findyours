@@ -1,0 +1,27 @@
+    nav {
+        position: fixed;
+        top: 0;
+        height: 50px;
+        width: 100%;
+        display: flex;
+        border: solid 2px;
+        font-size : 20px;
+        font-family: "GmarketSansMedium";
+        text-align: left;
+        background-color: #ccd5eb;
+        opacity: 70%;
+      }
+      
+    nav > div {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+      }
+        @font-face {
+            font-family: 'GmarketSansMedium';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
