@@ -8,19 +8,24 @@ body{
   background-attachment: fixed;
   background-size: cover;
   margin: 0;
-  overflow: hidden;
+  /*overflow: hidden;
+  이거 없애니까 슬라이드 이미지 밑에 목록 뜸?
+  */
 }
-/*
-- Home페이지 배경 이미지 크기 지정
-*/
+.container {
+  position: relative;
+}
+
 #backimg{
   width: 100%;
   height: 930px;
-}
-/*
-- linear-gradient를 background-image로 설정하여 스크롤 할 때 흰색 노출을 방지, 색 지정
-- overflow를 hidden으로 헤서 스크롤 창을 닫아준다
+  /*
+- Home페이지 배경 이미지 크기 지정
 */
+}
+
+
+
 .logo {
   font-family: "GmarketSansMedium";
   position: fixed;
@@ -31,6 +36,10 @@ body{
   background: linear-gradient(to right top,#5776bed9,#DCE2F0);
   color: transparent;
   -webkit-background-clip: text;
+  /*
+- linear-gradient를 background-image로 설정하여 스크롤 할 때 흰색 노출을 방지, 색 지정
+- overflow를 hidden으로 헤서 스크롤 창을 닫아준다
+*/
 }
 
 @font-face {
