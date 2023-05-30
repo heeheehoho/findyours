@@ -21,5 +21,5 @@ const Nav = () => {
     </nav>
   );
 };
-
+/*Nav 상대 위치로 바꿔보기 */
 export default Nav;

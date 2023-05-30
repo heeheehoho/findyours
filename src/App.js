@@ -13,13 +13,15 @@ class App extends React.Component {
   <body className='appbody'>
       <div className='App'>
         <BrowserRouter>
+         <Nav />
+         <div id="contentArea">
            <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About/>} />
             <Route path="/about2" element={<About2 />} />
             <Route path="/about3" element={<About3 />} />
           </Routes>
-        <Nav />
+          </div>
         </BrowserRouter>
     </div>
     </body>

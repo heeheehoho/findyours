@@ -2,15 +2,18 @@
 - linear-gradient를 background-image로 설정하여 스크롤 할 때 흰색 노출을 방지, 색 지정
 - overflow를 hidden으로 헤서 스크롤 창을 닫아준다
 */
+#contentArea{
+  position:absolute;
+  top: 55px;
+  width: 100%;
+}
 body{
   background-image:linear-gradient(to left top, #bdc3c7, #2c3e50);
   background-color: #2c3e50;
   background-attachment: fixed;
   background-size: cover;
   margin: 0;
-  /*overflow: hidden;
-  이거 없애니까 슬라이드 이미지 밑에 목록 뜸?
-  */
+  
 }
 .container {
   position: relative;
@@ -24,27 +27,357 @@ body{
 */
 }
 
-
-
-.logo {
-  font-family: "GmarketSansMedium";
-  position: fixed;
-  font-size: 55px;
-  margin-top: 70px;
-  margin-left: 36%;
-  margin-bottom: -10px;
-  background: linear-gradient(to right top,#5776bed9,#DCE2F0);
-  color: transparent;
-  -webkit-background-clip: text;
-  /*
-- linear-gradient를 background-image로 설정하여 스크롤 할 때 흰색 노출을 방지, 색 지정
-- overflow를 hidden으로 헤서 스크롤 창을 닫아준다
-*/
-}
-
 @font-face {
   font-family: 'Dovemayo_wild';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/Dovemayo_wild.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
+
+
+/*
+RealTime
+*/
+
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Font */
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Yeon+Sung&display=swap");
+
+
+/* 
+카카오지도 api 
+*/
+.map_wrap {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 500px;
+}
+.radius_border {
+  border: 1px solid #919191;
+  border-radius: 5px;
+}
+.custom_typecontrol {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  overflow: hidden;
+  width: 130px;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+  font-size: 12px;
+  font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+}
+.custom_typecontrol span {
+  display: block;
+  width: 65px;
+  height: 30px;
+  float: left;
+  text-align: center;
+  line-height: 30px;
+  cursor: pointer;
+}
+.custom_typecontrol .btn {
+  background: #fff;
+  background: linear-gradient(#fff, #e6e6e6);
+}
+.custom_typecontrol .btn:hover {
+  background: #f5f5f5;
+  background: linear-gradient(#f5f5f5, #e3e3e3);
+}
+.custom_typecontrol .btn:active {
+  background: #e6e6e6;
+  background: linear-gradient(#e6e6e6, #fff);
+}
+.custom_typecontrol .selected_btn {
+  color: #fff;
+  background: #425470;
+  background: linear-gradient(#425470, #5b6d8a);
+}
+.custom_typecontrol .selected_btn:hover {
+  color: #fff;
+}
+.custom_zoomcontrol {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  width: 36px;
+  height: 80px;
+  overflow: hidden;
+  z-index: 1;
+  background-color: #f5f5f5;
+}
+.custom_zoomcontrol span {
+  display: block;
+  width: 36px;
+  height: 40px;
+  text-align: center;
+  cursor: pointer;
+}
+.custom_zoomcontrol span img {
+  width: 15px;
+  height: 15px;
+  padding: 12px 0;
+  border: none;
+}
+.custom_zoomcontrol span:first-child {
+  border-bottom: 1px solid #bfbfbf;
+}
+/* 카카오지도 위치 주소 정보 api */
+.title {
+  font-weight: bold;
+  display: block;
+}
+.hAddr {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  border-radius: 2px;
+  background: #fff;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 1;
+  padding: 5px;
+}
+#centerAddr {
+  display: block;
+  margin-top: 2px;
+  font-weight: normal;
+}
+.bAddr {
+  padding: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* DiaryList */
+
+.DiaryList .menu_wrapper {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.DiaryList .menu_wrapper .right_col {
+  flex-grow: 1;
+}
+
+.DiaryList .menu_wrapper .right_col button {
+  width: 100%;
+}
+
+.DiaryList .ControlMenu {
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ececec;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+
+  cursor: pointer;
+  font-family: "Nanum Pen Script";
+  font-size: 24px;
+}
+
+/* DiaryItem */
+.DiaryItem {
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  border-bottom: 1px solid #e2e2e2;
+
+  display: flex;
+  justify-content: space-between;
+}
+.DiaryItem .emotion_img_wrapper {
+  cursor: pointer;
+  min-width: 120px;
+  height: 150px;
+  width: 200px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.DiaryItem .emotion_img_wrapper img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.DiaryItem .info_wrapper {
+  flex-grow: 1;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.DiaryItem .diary_date {
+  font-size: 25px;
+  margin-bottom: 5px;
+}
+
+.DiaryItem .diary_content_preview {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.DiaryItem .btn_wrapper {
+  min-width: 70px;
+}
+
+/* 
+My Button 
+*/
+
+.MyButton {
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-right: 20px;
+
+  font-size: 24px;
+  white-space: nowrap;
+  font-family: "Nanum Pen Script";
+}
+
+.MyButton_default {
+  background-color: #ececec;
+  color: black;
+}
+.MyButton_positive {
+  background-color: #64c964;
+  color: white;
+}
+.MyButton_negative {
+  background-color: #fd565f;
+  color: white;
+}
+
+/* my Custom */
+
+.map_caption {
+  text-align: center;
+}
+
+#clickLatlng {
+  font-family: "Yeon Sung", cursive;
+  font-size: 25px;
+}
+
+#searchInput {
+  cursor: pointer;
+  border: black;
+
+  border-radius: 5px;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-right: 20px;
+
+  font-size: 24px;
+  white-space: nowrap;
+  font-family: "Nanum Pen Script";
+  width: 50%;
+}
+
+
+
+/*
+d3 CSS
+*/
+.graph-svg {
+  margin-top: 100px;
+  margin-bottom: 50px;
+  /* 그래프 스타일 적용*/
+}
+
+
+/*
+MissigTable
+*/
+.PoliceAPI {
+  text-align: center;
+  color: #0a1622; 
+  font-size: 35px; 
+}
+
+table {
+  margin: 20px auto;
+  border-collapse: collapse;
+  margin :15px;
+}
+
+
+th {
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  padding: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 17px; 
+  
+}
+
+td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  color: #1c0245; 
+  font-size: 20px; 
+  background-color: rgba( 255, 255, 255, 0.2 );
+  
+}
+.item_name, 
+.item_occur_date, 
+.item_occur_adres  {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+td img {
+  width: 200px;
+  height: 250px;
+}
+
+/* Alternate row colors for better readability
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}*/
+
+
+
+
+
+
+
+/*body{
+    background-image:linear-gradient(to left top, #bdc3c7, #2c3e50);
+    background-color: #2c3e50;
+
+    /*overflow: hidden;
+    이거 없애니까 슬라이드 이미지 밑에 목록 뜸?
+    
+  } */

@@ -1,6 +1,6 @@
 import React from "react";
 import tree from '../images/tree.jpg';
-import main1 from '../images/main1.jpeg';
+import main1 from '../images/main1.jpg';
 import main2 from '../images/main2.jpeg';
 import main3 from '../images/main3.jpeg';
 import "./Home.css";
@@ -40,6 +40,7 @@ class Home extends React.Component {
     return (
       <div>
         <div className={`section ${isScrolled ? 'is-scrolled' : ''}`}>
+             <h1 className="logo">Find Yours</h1>
           <img src={tree} alt="Tree" className="background-image" />
         </div>
         <div className="section" ref={this.scrollRef}>

@@ -12,7 +12,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: -1;
+    z-index: 0;
   }
   
   .image-container {
@@ -56,4 +56,15 @@
   .image-overlay.active .image-caption {
     right: 0;
   }
-  
+  .logo {
+    font-family: "GmarketSansMedium";
+    position: fixed;
+    font-size: 55px;
+    margin-top: -580px;
+    margin-left: 5%;
+    margin-bottom: -10px;
+    background: linear-gradient(to right top, #5776bed9, #DCE2F0);
+    color: transparent;
+    -webkit-background-clip: text;
+    z-index: 1; /* 로고 요소를 트리 이미지 위에 표시 */
+  }

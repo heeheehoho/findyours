@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { select, scaleLinear, scaleBand, axisBottom, axisLeft, axisRight } from "d3";
-import "../pages.css";
+import './Home.css';
+
 
 const About3 = () => {
   const svgRef = useRef(null);
@@ -21,6 +22,7 @@ const About3 = () => {
     const innerHeight = height - margin.top - margin.bottom;
 
     const svg = select(svgRef.current)
+      .attr("class", "graph-svg")
       .attr("width", width)
       .attr("height", height);
 

@@ -5,11 +5,13 @@
         width: 100%;
         display: flex;
         border: solid 2px;
+   
         font-size : 20px;
         font-family: "GmarketSansMedium";
         text-align: left;
         background-color: #ccd5eb;
         opacity: 70%;
+        z-index: 1;
       }
       
     nav > div {
@@ -17,7 +19,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-
       }
         @font-face {
             font-family: 'GmarketSansMedium';
