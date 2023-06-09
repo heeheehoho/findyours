@@ -14,6 +14,7 @@ class About extends React.Component {
       <Carousel />     
       <br/> 
       <br/>   
+
       <h2 className="PoliceAPI">경찰청 실종자 정보</h2>
       <MissingTable />
 

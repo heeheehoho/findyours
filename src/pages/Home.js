@@ -41,6 +41,9 @@ class Home extends React.Component {
       <div>
         <div className={`section ${isScrolled ? 'is-scrolled' : ''}`}>
              <h1 className="logo">Find Yours</h1>
+             <div className="HomeText">
+              <h1 >"당신의 소중한 가족을 여러분의 품에 안겨드리기 위해"</h1>
+             </div>
           <img src={tree} alt="Tree" className="background-image" />
         </div>
         <div className="section" ref={this.scrollRef}>

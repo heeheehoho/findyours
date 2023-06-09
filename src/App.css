@@ -2,10 +2,51 @@
 - linear-gradient를 background-image로 설정하여 스크롤 할 때 흰색 노출을 방지, 색 지정
 - overflow를 hidden으로 헤서 스크롤 창을 닫아준다
 */
+.logo {
+  font-family: "GmarketSansMedium";
+  font-size: 55px;
+  margin-top: -650px;
+  margin-left: 5%;
+  margin-bottom: -10px;
+  background: linear-gradient(to right top, #5776bed9, #DCE2F0);
+  color: transparent;
+  -webkit-background-clip: text;
+  z-index: 1; /* 로고 요소를 트리 이미지 위에 표시 */
+}
+
 #contentArea{
   position:absolute;
   top: 55px;
   width: 100%;
+/*nav바 사라지는 오류 해결*/}
+
+.HomeText{
+z-index: 1;
+position: absolute;
+top: 12%;
+margin-left: 5%;
+color: whitesmoke;
+font-size: 17px;
+font-family: "Dovemayo_wild";
+opacity: 70%;
+font-style: italic;
+letter-spacing: 2px;
+animation: fadein 6s ease-in-out;
+}
+@keyframes fadein{
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+
+}
+.carousel{
+
+position: relative;
 }
 body{
   background-image:linear-gradient(to left top, #bdc3c7, #2c3e50);
@@ -307,12 +348,45 @@ My Button
 /*
 d3 CSS
 */
-.graph-svg {
-  margin-top: 100px;
-  margin-bottom: 50px;
-  /* 그래프 스타일 적용*/
-}
 
+@import url('https://fonts.googleapis.com/css2?family=Cute+Font&family=Do+Hyeon&family=Jua&family=Noto+Sans+KR:wght@100&family=Sunflower:wght@300&display=swap');
+        .countries {
+            fill: #86b28a;
+            stroke: black;
+            stroke-width: 1px;
+        }
+
+        .bar1 {
+            fill:#ffb74d;
+
+        }
+        .bar2 {
+            fill: #ff9800;
+        }
+        path:hover {
+            fill: #415943;
+        }
+        text3 {
+            
+            fill: red;
+        }
+        .text4 {
+            font-size: 13px;
+        }
+        g3{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        h1{
+            font-size: 45px;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        h3{
+            font-size: 20px;
+            font-family: 'Sunflower', sans-serif;
+        }
 
 /*
 MissigTable

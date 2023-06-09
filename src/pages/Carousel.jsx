@@ -5,6 +5,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import slide1 from '../images/slide1.png';
 import slide2 from '../images/slide2.png';
 import slide3 from '../images/slide3.png';
+import slide4 from '../images/slide4.png';
 
 const Carousel = () => {
     // 옵션
@@ -17,6 +18,7 @@ const Carousel = () => {
         slidesToScroll: 1,// 스크롤링할 슬라이드 수
         autoplay: true, // 자동 재생 설정
         autoplaySpeed: 3000 // 자동 재생 속도 (3초마다 슬라이드 전환)
+        
     }
 
     return (
@@ -30,6 +32,9 @@ const Carousel = () => {
                 </div>
                 <div>
                 <img src={slide3} alt="Slide 3" />
+                </div>
+                <div>
+                <img src={slide4} alt="Slide 4" />
                 </div>
             </Slider>
         </div>
