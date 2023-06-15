@@ -363,7 +363,10 @@ d3 CSS
         .bar2 {
             fill: #ff9800;
         }
-        path:hover {
+        .countries:hover {
+            fill: #415943;
+        }
+        .arc:hover {
             fill: #415943;
         }
         text3 {
@@ -387,7 +390,6 @@ d3 CSS
             font-size: 20px;
             font-family: 'Sunflower', sans-serif;
         }
-
 /*
 MissigTable
 */

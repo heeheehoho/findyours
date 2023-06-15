@@ -19,117 +19,294 @@ const About3 = () => {
     let currentIndex1=0;
     
     // SVG 요소의 너비, 높이, 여백 설정
-    const width = 400;
+    const width = 500;
     const height = 400;
     const margin = { top: 40, right: 40, bottom: 30, left: 60 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
+
+    ////////////////////////////////////
+    
     // SVG 요소 생성
-    const svg1 = d3.select('#graph1')
+    const svg4 = d3.select('#graph4')
     .append('svg')
     .attr("width", width)
     .attr("height", height);
 
-    const g1 = svg1.append('g')
+    const g4 = svg4.append('g')
     .attr('transform', `translate(${margin.left},${margin.top})`);
 
-    // 중앙 상단에 숫자를 표시할 텍스트 요소 추가
-    const text1 = g1.append('text')
-    .attr('class', 'value-text')
-    .attr('x', innerWidth / 2)
-    .attr('y', -10)
-    .attr('text-anchor', 'middle');
 
     // x축 스케일 설정
-    const xScale = d3.scaleBand()
-    .domain(['실종자 수', '미발견 실종자 수'])
-    .range([innerWidth / 4, (innerWidth / 4) * 3])//innerWidth를 수정했음
+    const xScale4 = d3.scaleBand()
+    .domain(sampleData1.map(d => d.name))
+    //.domain(['2016', '2017', '2018', '2019', '2020'])
+    .range([0, innerWidth])
     .padding(0.1);
 
-    const yScale = d3.scaleLinear()
-    .domain([100000,30000])
-    .range([0, innerHeight]);
+    const yScale4 = d3.scaleLinear()
+    .domain([30000,100000])
+    .range([innerHeight, 0]);
 
-    const y2Scale = d3.scaleLinear()
-    .domain([1200,300])
-    .range([0, innerHeight]);
+    const y2Scale4 = d3.scaleLinear()
+    .domain([300,1200])
+    .range([innerHeight, 0]);
 
 
     // x축 그리기
-    g1.append('g')
+    g4.append('g')
     .attr('transform', `translate(0, ${innerHeight})`)
-    .call(d3.axisBottom(xScale));
+    .call(d3.axisBottom(xScale4));
 
     // y축 그리기
-    g1.append('g')
-    .call(d3.axisLeft(yScale));
+    g4.append('g')
+    .call(d3.axisLeft(yScale4));
 
-    g1.append('g')
+    g4.append('g')//동그라미 위 값 쓰기
+    .selectAll('.text-black') // 새로운 CSS 클래스 추가
+    .data(sampleData1)
+    .enter()
+    .append('text')
+    .attr('class', 'text-black')
+    .attr('x', d => xScale4(d.name) + xScale4.bandwidth() / 2)
+    .attr('y', d => yScale4(d.value1))
+    .attr('text-anchor', 'middle')
+    .attr('dy', '-4px')
+    .style('fill', 'black')
+    .text(d => d.value1);
+
+    g4.append('g')
     .attr('transform', `translate(${innerWidth}, 0)`)
-    .call(d3.axisRight(y2Scale));
+    .call(d3.axisRight(y2Scale4));
+//
 
 
-    function updateGraph(sampleData1) {
-        // 데이터 바인딩
-        const bars1 = g1.selectAll('.bar1')
-            .data([sampleData1], d => d.name);
+    //////////좌측상단 색깔 구분글
+    const legendGroup = svg4.append('g')
+    .attr('transform', `translate(${margin.left + 150}, ${margin.top})`);
 
-        const bars2 = g1.selectAll('.bar2')
-            .data([sampleData1], d => d.name);
+    legendGroup.append('text')
+    .attr('class', 'legend-text')
+    .attr('x', 0)
+    .attr('y', 0)
+    .style('fill', 'green')
+    .text('실종자 현황');
+
+    legendGroup.append('text')
+    .attr('class', 'legend-text')
+    .attr('x', 0)
+    .attr('y', 20)
+    .style('fill', 'red')
+    .text('미발견 실종자');
+
+    ///////////
+
+    // const line1 = d3
+    // .line()
+    // .x(d => xScale4(d.name) + xScale4.bandwidth() / 2)
+    // .y(d => yScale4(d.value1));
+
+    const line2 = d3
+    .line()
+    .x(d => xScale4(d.name) + xScale4.bandwidth() / 2)
+    .y(d => y2Scale4(d.value2));
+
+    function drawGraph(sampleData1) {
+
+        const bars1 = g4.selectAll('.bar1')
+        .data(sampleData1)
+        .enter()
+        .append('rect')
+        .attr('class', 'bar1')
+        .attr('x', d => xScale4(d.name) + xScale4.bandwidth() / 4)
+        .attr('y', d => yScale4(d.value1))
+        .attr('width', xScale4.bandwidth() / 2)
+        .attr('height', d => innerHeight - yScale4(d.value1))
+        .attr('fill', 'black');
+
         // 새로운 데이터를 기반으로 그래프 업데이트
+        // g4.append('path')
+        // .datum(sampleData1)
+        // .attr('class', 'line1')
+        // .attr('fill', 'none')
+        // .attr('stroke', 'black')
+        // .attr('stroke-width', 2)
+        // .attr('d', line1);
+        
+        g4.append('path')
+        .datum(sampleData1)
+        .attr('class', 'line2')
+        .attr('fill', 'none')
+        .attr('stroke', 'red')
+        .attr('stroke-width', 2)
+        .attr('d', line2)
+        .selectAll('y2Scale4')
+        .style('text','red');
+
         bars1.enter()
         .append('rect')
         .attr('class', 'bar1')
-        .attr('x', d => xScale('실종자 수') - (xScale.bandwidth() / 2))
-        .attr('y', innerHeight)
-        .attr('width', xScale.bandwidth())
-        .attr('height', 0)
+        .attr('x', d => xScale4(d.name) + 14 + xScale4.bandwidth() / 2 - xScale4.bandwidth() / 4)
+        .attr('y', d => yScale4(d.value1))
+        .attr('width', xScale4.bandwidth())
+        .attr('height', d => innerHeight - yScale4(d.value1))
         .merge(bars1)
-        .transition()
-        .duration(700)
-        .attr('x', d => xScale('실종자 수') - (xScale.bandwidth() / 2))
-        .attr('y', d => yScale(d.value1))
-        .attr('height', d => innerHeight - yScale(d.value1));
+        .attr('fill', 'green');
+        //.attr('y', d => yScale(d.value1))
+
+        // g4.selectAll('.circle1')
+        //     .data(sampleData1)
+        //     .enter()
+        //     .append('circle')
+        //     .attr('class', 'circle1')
+        //     //.attr('cx, d => xScale4(d.name) + xScale4.bandwidth() / 2')
+        //     //.attr('cx', d => xScale4(d.name) + 10 + xScale4.bandwidth() / 2 - xScale4.bandwidth() / 4)// + xScale4.bandwidth() / 2
+        //     .attr('cx', d => xScale4(d.name) + 14 + xScale4.bandwidth() / 2 - xScale4.bandwidth() / 4)// + xScale4.bandwidth() / 2
+        //     .attr('cy', d => yScale4(d.value1))
+        //     .attr('r', 4)
+        //     .attr('fill', 'black');
+
+        g4.selectAll('.circle2')
+            .data(sampleData1)
+            .enter()
+            .append('circle')
+            .attr('class', 'circle2')
+            //.attr('cx, d => xScale4(d.name) + xScale4.bandwidth() / 2')
+            .attr('cx', d => xScale4(d.name) + 17 + xScale4.bandwidth() / 2 - xScale4.bandwidth() / 4)// + xScale4.bandwidth() / 2
+            .attr('cy', d => y2Scale4(d.value2))
+            .attr('r', 4)
+            .attr('fill', 'red');
+
         
-        bars2.enter()
-        .append('rect')
-        .attr('class', 'bar2')
-        .attr('x', d => xScale('미발견 실종자 수') + xScale.bandwidth()/2)
-        .attr('y', innerHeight)
-        .attr('width', xScale.bandwidth())
-        .attr('height', 0)
-        .merge(bars2)
-        .transition()
-        .duration(700)
-        .attr('x', d => xScale('미발견 실종자 수') + xScale.bandwidth()/2)
-        .attr('y', d => y2Scale(d.value2))
-        .attr('width', xScale.bandwidth())
-        .attr('height', d => innerHeight - y2Scale(d.value2));
-
-
-        text1.transition() // 숫자 애니메이션 설정
-        .duration(700) // 애니메이션 시간을 0.7초로 변경
-        .tween('text', function (d) {
-            const self = this;
-            const i = d3.interpolateNumber(this.textContent, sampleData1.name); // 현재 숫자와 업데이트할 숫자 사이를 보간
-            return function (t) {
-                self.textContent = Math.round(i(t)); // 숫자를 소수점 이하에서 반올림하여 표시
-            };
-        });       
+        } 
         
-        
-        bars1.exit().remove();
-        bars2.exit().remove();
+    drawGraph(sampleData1);
+    
+    g4.append('g')//동그라미 위 값 쓰기
+    .selectAll('.text-red') // 새로운 CSS 클래스 추가
+    .data(sampleData1)
+    .enter()
+    .append('text')
+    .attr('class', 'text-red')
+    .attr('x', d => xScale4(d.name) + xScale4.bandwidth() / 2)
+    .attr('y', d => y2Scale4(d.value2) - 10)
+    .attr('text-anchor', 'middle')
+    .attr('dy', '-4px')
+    .style('fill', 'red')
+    .text(d => d.value2);
+    
 
-        // 그래프 업데이트 후 필요한 요소 제거
-    }
-    // 3초마다 그래프 업데이트
-    // setInterval(() => {
-    //     updateGraph(sampleData1[currentIndex1]); // 그래프 업데이트
-    //     currentIndex1 = (currentIndex1 + 1) % (sampleData1.length); // 인덱스를 업데이트하여 다음 데이터로 이동
-    // }, 3000);
+    const sample = [
+        { name: "1시간", value1: 2100},
+        { name: "3시간", value1: 321},
+        { name: "12시간", value1: 37},
+        { name: "3일", value1: 19},
+        { name: "7일", value1: 56},
+        { name: "1년", value1: 132}
+        ];
 
+    // SVG 요소의 너비, 높이, 여백 설정
+    // const width = 400;
+    // const height = 400;
+    // const margin = { top: 40, right: 40, bottom: 30, left: 60 };
+    // const innerWidth = width - margin.left - margin.right;
+    // const innerHeight = height - margin.top - margin.bottom;
+
+    const svg5 = d3.select('#graph5')
+    .append('svg')
+    .attr("width", 700)
+    .attr("height", height);
+
+    const g5 = svg5.append('g')
+    .attr('transform', `translate(${margin.left},${margin.top})`);
+
+
+    // x축 스케일 설정
+    const xScale5 = d3.scaleBand()
+    .domain(sample.map(d => d.name))
+    .range([0, 600])
+    .padding(0.1);
+
+    const yScale5 = d3.scaleLinear()
+    .domain([0,2500])
+    .range([innerHeight, 0]);
+
+    // x축 그리기
+    g5.append('g')
+    .attr('transform', `translate(0, ${innerHeight})`)
+    .call(d3.axisBottom(xScale5));
+
+    // y축 그리기
+    g5.append('g')
+    .call(d3.axisLeft(yScale5));
+
+    g5.append('g')//동그라미 위 값 쓰기
+    .selectAll('.text-blue') // 새로운 CSS 클래스 추가
+    .data(sample)
+    .enter()
+    .append('text')
+    .attr('class', 'text-blue')
+    .attr('x', d => xScale5(d.name) + xScale5.bandwidth() / 2)
+    .attr('y', d => yScale5(d.value1))
+    .attr('text-anchor', 'middle')
+    .attr('dy', '-4px')
+    .style('fill', 'black')
+    .text(d => d.value1);
+
+    const line1 = d3
+    .line()
+    .x(d => xScale5(d.name) + xScale5.bandwidth() / 2)
+    .y(d => yScale5(d.value1));
+///////
+    const legendGroup1 = svg5.append('g')
+    .attr('transform', `translate(${margin.left + 100}, ${margin.top})`);
+
+    legendGroup1.append('text')
+    .attr('class', 'legend-text1')
+    .attr('x', 0)
+    .attr('y', 50)
+    .style('fill', 'black')
+    .style('font-size','20px')
+    .text('시간이 지날수록 실종해제는 급격히 어려워집니다.');
+//////////
+    function drawGraph1(sample) {
+
+        // 새로운 데이터를 기반으로 그래프 업데이트
+        g5.append('path')
+        .datum(sample)
+        .attr('class', 'line1')
+        .attr('fill', 'none')
+        .attr('stroke', 'black')
+        .attr('stroke-width', 2)
+        .attr('d', line1)
+        .selectAll('y2Scale4')
+        .style('text','blue');
+
+        // g4.append('path')
+        // .datum(sampleData1)
+        // .attr('class', 'line2')
+        // .attr('fill', 'none')
+        // .attr('stroke', 'red')
+        // .attr('stroke-width', 2)
+        // .attr('d', line2)
+        // .selectAll('y2Scale4')
+        // .style('text','red');
+
+        g5.selectAll('.circle3')
+        .data(sample)
+        .enter()
+        .append('circle')
+        .attr('class', 'circle3')
+        .attr('cx', d => xScale5(d.name) + 22 + xScale5.bandwidth() / 2 - xScale5.bandwidth() / 4)// + xScale4.bandwidth() / 2
+        .attr('cy', d => yScale5(d.value1))
+        .attr('r', 4)
+        .attr('fill', 'black');
+
+    } 
+
+    drawGraph1(sample);
+/////////////////////////////////////////////
     const sampleData2 = [
         { name: 2016, value1: 67907, value2: 61 },
         { name: 2017, value1: 65830, value2: 52 },
@@ -231,8 +408,6 @@ const About3 = () => {
     }
 
     setInterval(() => {
-        updateGraph(sampleData1[currentIndex1]); // 그래프 업데이트
-        currentIndex1 = (currentIndex1 + 1) % (sampleData1.length); // 인덱스를 업데이트하여 다음 데이터로 이동
         updateGraph2(sampleData2[currentIndex2]); // 그래프 업데이트
         currentIndex2 = (currentIndex2 + 1) % (sampleData2.length); // 인덱스를 업데이트하여 다음 데이터로 이동
     }, 3000);
@@ -422,27 +597,37 @@ const About3 = () => {
             console.error(err);
         });
 
-
   }, []);
 
   return (
     <div>
-        <h1>실종자 현황</h1>
-    <svg id="graph1" width="500px" height="400px"></svg>
+        
+    <h1> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;실종자 현황   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+        2018년도 실종 이후 소요 시간 별 실종해제 수
+    </h1>
+    <svg id="graph4" width="500px" height="400px"></svg>
+    <svg id="graph5" width="700px" height="400px"></svg>
     <h3>현재 적지 않은 수의 실종자들이 가족 품으로 돌아가지 못하고 있습니다.
-        심지어 연도 별 미발견 실종자는 최근까지 증가하는 추세입니다.
+        실종자 수는 매년 수만명에 달하지만, 미해제 실종자 수는 꾸준히 증가하는 추세입니다.
+
+        실종자의 실종해제는 시간이 갈수록 점점 어려워집니다.
+
+        저희의 서비스는 실종자들이 빠르게 가족들의 품으로 돌아가게 도울 것입니다.
     </h3>
-    <h1>몽타주 작성 현황 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+    <h1>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;몽타주 작성 현황 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
         실종자 발견 요인</h1>
     <svg id="graph2" width="500px" height="400px"></svg>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
     <svg id="graph" width="500px" height="400px"></svg>
     <h3>대부분의 실종자가 시민의 제보를 통해 가족들의 품으로 돌아가지만,
-        실제로 다양한 법적 이유로 몽타주 작성은 어려운 현실에 놓여있습니다.
+        실제로 다양한 법적 이유로 몽타주 작성은 어려운 현실에 놓여있습니다. 
         저희 서비스는 홈페이지를 통해 실종자들의 실종 해제를 도울 것입니다.
     </h3>
-    <h1>지역 별 실종자</h1>
+    <h1>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;지역 별 실종자 분포</h1>
     <svg id="graph3" width="1000px" height="800px"></svg>
-    <h3>해당 지도를 통해 전국에 있는 실종자들의 정보와 분포를 확인 가능합니다.</h3>
+    <h3>해당 지도를 통해 전국에 있는 실종자들의 정보와 분포를 확인 가능합니다.
+        지역을 클릭하여 확대된 지도에서 확인 가능합니다.
+    </h3>
     </div>
   );
 };
